@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "postinstall": "npm run build",
     "start": "serve -s dist",
     "lint": "eslint .",
     "preview": "vite preview"
