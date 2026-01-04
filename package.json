@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "prestart": "if [ ! -d dist ]; then npm run build; fi",
     "start": "npx serve -s dist -l ${PORT:-8080}",
     "lint": "eslint .",
     "preview": "vite preview"
