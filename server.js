@@ -1,20 +1,16 @@
 #!/usr/bin/env node
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
 import { spawn } from 'child_process';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { platform } from 'os';
 
 const port = process.env.PORT || '8080';
-const servePath = join(__dirname, 'node_modules', '.bin', 'serve');
 
 console.log(`Starting server on port ${port}...`);
 console.log(`PORT environment variable: ${process.env.PORT || 'not set, using default 8080'}`);
 
-const serve = spawn(servePath, ['-s', 'dist', '-l', port], {
+// Use npx serve which works cross-platform (Windows, Linux, macOS)
+const serve = spawn('npx', ['serve', '-s', 'dist', '-l', port], {
   stdio: 'inherit',
-  cwd: __dirname
+  shell: platform() === 'win32' // Use shell on Windows
 });
 
 serve.on('error', (err) => {

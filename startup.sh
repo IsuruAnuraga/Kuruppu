@@ -12,7 +12,19 @@ if [ ! -d "dist" ]; then
   exit 1
 fi
 
+# Verify health.json exists in dist
+if [ ! -f "dist/health.json" ]; then
+  echo "WARNING: health.json not found in dist folder"
+  # Copy health.json from public if it exists
+  if [ -f "public/health.json" ]; then
+    cp public/health.json dist/health.json
+    echo "Copied health.json from public to dist"
+  fi
+fi
+
 # Start the server
+# serve defaults to 0.0.0.0, so just specify the port
 echo "Starting server on port $PORT..."
+echo "Health check endpoint: http://localhost:$PORT/health.json"
 exec npx serve -s dist -l $PORT
 
