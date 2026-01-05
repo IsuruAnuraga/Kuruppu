@@ -1,29 +1,22 @@
 #!/bin/bash
-# Azure startup script - Build and serve the app
+# Azure startup script - Serve the built app
+# Note: Azure should build the app during deployment, this script just serves it
 
-# Set PORT if not set
+# Azure sets PORT automatically, but set default if not set
 export PORT=${PORT:-8080}
 
-# Install dependencies (production only for speed)
-echo "Installing dependencies..."
-npm install --production
-
-# Check if dist folder exists, if not, build it
+# Verify dist folder exists
 if [ ! -d "dist" ]; then
-  echo "Dist folder not found, building application..."
+  echo "ERROR: dist folder not found! Make sure the app is built during deployment."
+  echo "Building application..."
   npm install
   npm run build
 fi
 
-# Verify dist folder exists
+# Verify dist folder exists after build attempt
 if [ ! -d "dist" ]; then
   echo "ERROR: dist folder not found after build!"
   exit 1
-fi
-
-# Verify health.json exists in dist
-if [ ! -f "dist/health.json" ]; then
-  echo "WARNING: health.json not found in dist folder"
 fi
 
 # Start the server

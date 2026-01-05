@@ -20,10 +20,10 @@ resource "azurerm_linux_web_app" "portfolio" {
   }
 
   app_settings = {
-    # Ensure PORT is set (Azure sets this automatically, but you can override)
-    PORT = "8080"
+    # Azure sets PORT automatically, no need to set it here
     
-    # Disable build during deployment since we build in GitHub Actions
+    # Disable build during deployment since we build in GitHub Actions/CI
+    # Set to "true" if you want Azure to build during deployment
     SCM_DO_BUILD_DURING_DEPLOYMENT = "false"
     
     # Enable logging
